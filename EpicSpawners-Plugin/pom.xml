@@ -7,7 +7,7 @@
     <parent>
         <groupId>com.craftaro</groupId>
         <artifactId>EpicSpawners-Parent</artifactId>
-        <version>8.1.0</version>
+        <version>8.2.0</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>EpicSpawners-Plugin</artifactId>
@@ -67,6 +67,7 @@
                                         <exclude>**/third_party/org/h2/**</exclude>
                                         <exclude>**/third_party/com/cryptomorin/**</exclude>
                                         <exclude>**/third_party/org/reactivestreams/**</exclude>
+                                        <exclude>**/third_party/io/papermc/paperlib/**</exclude>
                                     </excludes>
                                 </filter>
                             </filters>
@@ -142,7 +143,7 @@
         <dependency>
             <groupId>com.github.brcdev-minecraft</groupId>
             <artifactId>shopgui-api</artifactId>
-            <version>1.0.0</version>
+            <version>3.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
