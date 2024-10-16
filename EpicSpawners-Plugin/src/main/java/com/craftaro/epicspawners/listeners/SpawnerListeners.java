@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityTargetLivingEntityEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 
 public class SpawnerListeners implements Listener {
-    //@EventHandler
+    @EventHandler
     public void onSpawn(SpawnerSpawnEvent event) {
 
         //Respect vanilla spawners
