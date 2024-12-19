@@ -3,6 +3,7 @@ package com.craftaro.epicspawners.spawners.spawner;
 import com.craftaro.core.compatibility.CompatibleBiome;
 import com.craftaro.core.compatibility.ServerVersion;
 import com.craftaro.core.configuration.Config;
+import com.craftaro.third_party.com.cryptomorin.xseries.XBiome;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.craftaro.third_party.org.apache.commons.text.WordUtils;
@@ -27,7 +28,6 @@ import com.craftaro.epicspawners.spawners.condition.SpawnConditionStorm;
 import com.craftaro.epicspawners.utils.SpawnerDataBuilderImpl;
 import com.craftaro.epicspawners.utils.SpawnerTierBuilderImpl;
 import org.bukkit.Location;
-import org.bukkit.block.Biome;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -263,10 +263,10 @@ public class SpawnerManagerImpl implements SpawnerManager {
         SpawnerTier tier = tierBuilder.build();
 
         if (type == EntityType.SLIME) {
-            tier.addCondition(new SpawnConditionBiome(CompatibleBiome.SWAMP.getBiome()));
+            tier.addCondition(new SpawnConditionBiome(XBiome.SWAMP));
             tier.addCondition(new SpawnConditionHeight(50, 70));
         } else {
-            tier.addCondition(new SpawnConditionBiome(Biome.values()));
+            tier.addCondition(new SpawnConditionBiome(XBiome.values()));
             // TODO: These values should probably be *world* dependent as even in older versions, the max build height could be higher (vanilla spawners probably work up there too?)
             if (ServerVersion.isServerVersionBelow(ServerVersion.V1_17)) {
                 tier.addCondition(new SpawnConditionHeight(0, 265));
@@ -364,14 +364,14 @@ public class SpawnerManagerImpl implements SpawnerManager {
 
                 if (currentSection2.contains("Conditions")) {
                     String biomeString = currentSection2.getString("Conditions.Biomes");
-                    Set<Biome> biomes;
+                    Set<XBiome> biomes;
                     if ("ALL".equalsIgnoreCase(biomeString)) {
-                        biomes = EnumSet.allOf(Biome.class);
+                        biomes = Arrays.stream(XBiome.values()).collect(Collectors.toSet());
                     } else {
                         biomes = new HashSet<>();
                         for (String string : biomeString.split(", ")) {
                             if (!string.trim().isEmpty()) {
-                                biomes.add(CompatibleBiome.getBiome(string).getBiome());
+                                biomes.add(XBiome.of(string).get());
                             }
                         }
                     }
@@ -466,10 +466,10 @@ public class SpawnerManagerImpl implements SpawnerManager {
 
                 for (SpawnCondition spawnCondition : spawnerTier.getConditions()) {
                     if (spawnCondition instanceof SpawnConditionBiome) {
-                        if (EnumSet.allOf(Biome.class).equals(((SpawnConditionBiome) spawnCondition).getBiomes())) {
+                        if (Arrays.stream(XBiome.values()).map(XBiome::getBiome).equals(((SpawnConditionBiome) spawnCondition).getBiomes())) {
                             currentSection2.set("Conditions.Biomes", "ALL");
                         } else {
-                            currentSection2.set("Conditions.Biomes", String.join(", ", ((SpawnConditionBiome) spawnCondition).getBiomes().stream().map(Enum::name).collect(Collectors.toSet())));
+                            currentSection2.set("Conditions.Biomes", String.join(", ", ((SpawnConditionBiome) spawnCondition).getBiomes().stream().map(XBiome::name).collect(Collectors.toSet())));
                         }
                     }
                     if (spawnCondition instanceof SpawnConditionHeight) {

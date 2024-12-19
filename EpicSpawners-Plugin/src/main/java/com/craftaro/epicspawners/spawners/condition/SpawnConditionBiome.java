@@ -1,23 +1,25 @@
 package com.craftaro.epicspawners.spawners.condition;
 
+import com.craftaro.third_party.com.cryptomorin.xseries.XBiome;
 import com.craftaro.third_party.org.apache.commons.text.WordUtils;
 import com.craftaro.epicspawners.EpicSpawners;
 import com.craftaro.epicspawners.api.spawners.condition.SpawnCondition;
 import com.craftaro.epicspawners.api.spawners.spawner.PlacedSpawner;
 import com.google.common.collect.Iterables;
-import org.bukkit.block.Biome;
 
+import java.util.Arrays;
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class SpawnConditionBiome implements SpawnCondition {
-    private final Set<Biome> biomes;
+    private final Set<XBiome> biomes;
 
-    public SpawnConditionBiome(Biome... biomes) {
-        this.biomes = (biomes.length >= 1) ? EnumSet.of(biomes[0], biomes) : EnumSet.noneOf(Biome.class);
+    public SpawnConditionBiome(XBiome... biomes) {
+        this.biomes = Arrays.stream(biomes).collect(Collectors.toSet());
     }
 
-    public SpawnConditionBiome(Set<Biome> biomes) {
+    public SpawnConditionBiome(Set<XBiome> biomes) {
         this.biomes = biomes;
     }
 
@@ -44,7 +46,7 @@ public class SpawnConditionBiome implements SpawnCondition {
         return WordUtils.capitalizeFully(Iterables.get(this.biomes, 0).name().replace("_", " "));
     }
 
-    public Set<Biome> getBiomes() {
+    public Set<XBiome> getBiomes() {
         return this.biomes;
     }
 }

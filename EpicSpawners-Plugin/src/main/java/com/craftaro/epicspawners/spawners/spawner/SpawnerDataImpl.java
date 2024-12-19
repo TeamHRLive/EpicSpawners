@@ -1,6 +1,7 @@
 package com.craftaro.epicspawners.spawners.spawner;
 
 import com.craftaro.core.compatibility.ServerVersion;
+import com.craftaro.third_party.com.cryptomorin.xseries.XBiome;
 import com.craftaro.third_party.com.cryptomorin.xseries.XMaterial;
 import com.craftaro.epicspawners.api.spawners.spawner.SpawnerData;
 import com.craftaro.epicspawners.api.spawners.spawner.SpawnerTier;
@@ -10,7 +11,6 @@ import com.craftaro.epicspawners.spawners.condition.SpawnConditionLightDark;
 import com.craftaro.epicspawners.spawners.condition.SpawnConditionNearbyEntities;
 import com.craftaro.epicspawners.spawners.condition.SpawnConditionNearbyPlayers;
 import com.craftaro.epicspawners.spawners.condition.SpawnConditionStorm;
-import org.bukkit.block.Biome;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -244,7 +244,7 @@ public class SpawnerDataImpl implements SpawnerData {
         } else {
             tier.addCondition(new SpawnConditionHeight(-64, 320));
         }
-        tier.addCondition(new SpawnConditionBiome(Biome.values()));
+        tier.addCondition(new SpawnConditionBiome(XBiome.values()));
         tier.addCondition(new SpawnConditionLightDark(SpawnConditionLightDark.Type.BOTH));
         tier.addCondition(new SpawnConditionStorm(false));
         tier.addCondition(new SpawnConditionNearbyEntities(6));
