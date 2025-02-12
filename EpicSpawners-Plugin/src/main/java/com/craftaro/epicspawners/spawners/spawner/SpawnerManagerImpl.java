@@ -466,12 +466,18 @@ public class SpawnerManagerImpl implements SpawnerManager {
 
                 for (SpawnCondition spawnCondition : spawnerTier.getConditions()) {
                     if (spawnCondition instanceof SpawnConditionBiome) {
-                        if (Arrays.stream(XBiome.values()).map(XBiome::getBiome).equals(((SpawnConditionBiome) spawnCondition).getBiomes())) {
+                        Set<XBiome> allBiomes = Arrays.stream(XBiome.values()).collect(Collectors.toSet());
+                        Set<XBiome> conditionBiomes = ((SpawnConditionBiome) spawnCondition).getBiomes();
+                        if (allBiomes.equals(conditionBiomes)) {
                             currentSection2.set("Conditions.Biomes", "ALL");
                         } else {
-                            currentSection2.set("Conditions.Biomes", String.join(", ", ((SpawnConditionBiome) spawnCondition).getBiomes().stream().map(XBiome::name).collect(Collectors.toSet())));
+                            String biomesList = conditionBiomes.stream()
+                                    .map(XBiome::name)
+                                    .collect(Collectors.joining(", "));
+                            currentSection2.set("Conditions.Biomes", biomesList);
                         }
                     }
+
                     if (spawnCondition instanceof SpawnConditionHeight) {
                         currentSection2.set("Conditions.Height", ((SpawnConditionHeight) spawnCondition).getMin() + ":" + ((SpawnConditionHeight) spawnCondition).getMax());
                     }

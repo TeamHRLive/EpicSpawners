@@ -8,7 +8,6 @@ import com.craftaro.epicspawners.api.spawners.spawner.PlacedSpawner;
 import com.google.common.collect.Iterables;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -39,7 +38,18 @@ public class SpawnConditionBiome implements SpawnCondition {
 
     @Override
     public boolean isMet(PlacedSpawner spawner) {
-        return this.biomes.contains(spawner.getLocation().getBlock().getBiome());
+        String biomeName = spawner.getLocation().getBlock().getBiome().name();
+        XBiome resolvedBiome = getBiomeFromName(biomeName);
+        return resolvedBiome != null && this.biomes.contains(resolvedBiome);
+    }
+
+    private XBiome getBiomeFromName(String biomeName) {
+        for (XBiome xBiome : XBiome.values()) {
+            if (xBiome.name().equalsIgnoreCase(biomeName)) {
+                return xBiome;
+            }
+        }
+        return null;
     }
 
     private String getFriendlyBiomeName() {
