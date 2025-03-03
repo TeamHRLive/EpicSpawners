@@ -2,7 +2,6 @@ package com.craftaro.epicspawners.listeners;
 
 import com.craftaro.core.compatibility.ServerVersion;
 import com.craftaro.epicspawners.api.EpicSpawnersApi;
-import com.craftaro.epicspawners.api.spawners.spawner.SpawnerStack;
 import com.craftaro.epicspawners.settings.Settings;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
