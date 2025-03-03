@@ -4,7 +4,7 @@
     <groupId>com.craftaro</groupId>
     <artifactId>EpicSpawners-Parent</artifactId>
     <packaging>pom</packaging>
-    <version>8.8.0</version>
+    <version>8.8.1</version>
 
     <modules>
         <module>EpicSpawners-API</module>
