@@ -3,7 +3,7 @@ description: ${project.parent.description}
 version: ${project.version}
 api-version: 1.13
 
-main: com.craftaro.epicspawners.EpicSpawners
+main: com.songoda.epicspawners.EpicSpawners
 softdepend:
   - ASkyBlock
   - BentoBox
