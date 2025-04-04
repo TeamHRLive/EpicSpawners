@@ -30,7 +30,7 @@ softdepend:
   - Vault
   - WorldGuard
 
-author: Craftaro
+author: Songoda
 website: ${project.parent.url}
 
 commands:
