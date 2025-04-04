@@ -59,7 +59,7 @@ public class CommandChange extends AbstractCommand {
             return ReturnType.FAILURE;
         }
 
-        spawner.getFirstStack().convert(data, player, sender.hasPermission("com/craftaro/epicspawners"));
+        spawner.getFirstStack().convert(data, player, sender.hasPermission("com.songoda.epicspawners"));
         return ReturnType.SUCCESS;
     }
 
