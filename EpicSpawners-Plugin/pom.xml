@@ -126,7 +126,7 @@
         <dependency>
             <groupId>com.songoda</groupId>
             <artifactId>EpicAnchors-API</artifactId>
-            <version>4.0.0</version>
+            <version>4.0.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
