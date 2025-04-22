@@ -21,8 +21,8 @@ import java.util.Map;
 public class SpawnerStackImpl implements SpawnerStack {
     private PlacedSpawnerImpl spawner;
     private int stackSize;
-
     private SpawnerTier currentTier;
+    private String dataType;
 
     /**
      * Default constructor used for database loading.
@@ -40,6 +40,7 @@ public class SpawnerStackImpl implements SpawnerStack {
         this.spawner = (PlacedSpawnerImpl) EpicSpawners.getInstance().getSpawnerManager().getSpawner(spawnerId);
         this.currentTier = EpicSpawners.getInstance().getSpawnerManager().getSpawnerData(dataType).getTier(tier);
         this.stackSize = amount;
+        this.dataType = dataType;
     }
 
     public SpawnerStackImpl(PlacedSpawnerImpl spawner) {
@@ -60,6 +61,11 @@ public class SpawnerStackImpl implements SpawnerStack {
             this.currentTier = tier;
         }
         this.stackSize = stackSize;
+    }
+
+    @Override
+    public String getType() {
+        return this.dataType;
     }
 
     @Override

@@ -110,6 +110,8 @@ public class EditorTiersGui extends Gui {
                                         this.player.sendMessage(TextUtils.formatText("&6" + tier.getIdentifyingName() + " &7 has been destroyed successfully"));
                                         this.spawnerData.removeTier(tier);
                                         this.plugin.getLootablesManager().getLootManager().removeLootable(tier.getFullyIdentifyingName());
+                                        //Save the spawner data
+                                        this.plugin.getSpawnerManager().saveSpawnerDataToFile();
                                     }
                                     this.plugin.getGuiManager().showGUI(this.player, new EditorTiersGui(this.plugin, this.player, this.spawnerData));
                                 });

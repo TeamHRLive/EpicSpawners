@@ -5,6 +5,13 @@ import com.songoda.epicspawners.api.utils.CostType;
 import org.bukkit.entity.Player;
 
 public interface SpawnerStack extends Data {
+
+    /**
+     * Gets the spawner type of this stack.
+     *
+     * @return the spawner type
+     */
+    String getType();
     PlacedSpawner getSpawner();
 
     int getStackSize();

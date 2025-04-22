@@ -6,6 +6,7 @@ import com.songoda.core.database.Data;
 import com.songoda.core.database.DataManager;
 import com.songoda.core.database.SerializedLocation;
 import com.songoda.core.nms.world.SpawnedEntity;
+import com.songoda.epicspawners.api.spawners.spawner.SpawnerData;
 import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.third_party.com.cryptomorin.xseries.XSound;
 import com.songoda.third_party.org.jooq.impl.DSL;
@@ -91,6 +92,31 @@ public class PlacedSpawnerImpl implements PlacedSpawner, Data {
             List<SpawnerStack> spawnerStacks = dataManager.loadBatch(SpawnerStackImpl.class, "spawner_stacks", DSL.field("spawner_id").eq(this.id));
             for (SpawnerStack stack : spawnerStacks) {
                 SpawnerStackImpl spawnerStackImpl = (SpawnerStackImpl) stack;
+                //Check if tier exist, if not set do default
+                SpawnerData data = EpicSpawners.getInstance().getSpawnerManager().getSpawnerData(stack.getType());
+                if (data == null) {
+                    //Invalid spawner stack, remove it
+                    dataManager.delete(spawnerStackImpl);
+                    continue;
+                }
+
+
+
+                SpawnerTier tier = stack.getCurrentTier();
+                if (tier == null) {
+                    //Invalid spawner stack, set it do the first tier
+                    spawnerStackImpl.setTier(data.getFirstTier());
+                    //Save it to the database
+                    dataManager.getDatabaseConnector().connectDSL(dslContext1 -> {
+                        dslContext1.update(DSL.table(dataManager.getTablePrefix() + "spawner_stacks"))
+                                .set(DSL.field("tier"), data.getFirstTier().getIdentifyingName())
+                                .where(DSL.field("spawner_id").eq(this.id))
+                                .and(DSL.field("data_type").eq(stack.getSpawnerData().getIdentifyingName()))
+                                .and(DSL.field("amount").eq(stack.getStackSize()))
+                                .execute();
+                    });
+                }
+
                 spawnerStackImpl.setSpawner(this);
                 this.spawnerStacks.push(spawnerStackImpl);
             }
