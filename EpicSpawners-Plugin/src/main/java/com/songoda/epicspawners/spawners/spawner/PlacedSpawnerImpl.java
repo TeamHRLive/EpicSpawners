@@ -118,7 +118,10 @@ public class PlacedSpawnerImpl implements PlacedSpawner, Data {
                 }
 
                 spawnerStackImpl.setSpawner(this);
-                this.spawnerStacks.push(spawnerStackImpl);
+                // Skip stacks with 0 amount
+                if (spawnerStackImpl.getStackSize() > 0) {
+                    this.spawnerStacks.push(spawnerStackImpl);
+                }
             }
         });
     }
