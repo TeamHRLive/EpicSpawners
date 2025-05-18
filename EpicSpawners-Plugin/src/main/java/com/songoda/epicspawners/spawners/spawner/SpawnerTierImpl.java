@@ -1,6 +1,7 @@
 package com.songoda.epicspawners.spawners.spawner;
 
 import com.songoda.core.gui.GuiUtils;
+import com.songoda.third_party.com.cryptomorin.xseries.XItemFlag;
 import com.songoda.third_party.com.cryptomorin.xseries.XMaterial;
 import com.songoda.core.third_party.de.tr7zw.nbtapi.NBTItem;
 import com.songoda.core.utils.TextUtils;
@@ -23,7 +24,9 @@ import com.songoda.epicspawners.spawners.spawner.option.SpawnOptionItem;
 import com.google.common.base.Preconditions;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.EntityType;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -118,6 +121,10 @@ public class SpawnerTierImpl implements SpawnerTier {
 
         ItemStack item = GuiUtils.createButtonItem(XMaterial.SPAWNER, getCompiledDisplayName(false, stackSize));
         item.setAmount(amount);
+
+        ItemMeta itemmeta = item.getItemMeta();
+        itemmeta.addItemFlags(XItemFlag.HIDE_ADDITIONAL_TOOLTIP.get());
+        item.setItemMeta(itemmeta);
 
         NBTItem nbtItem = new NBTItem(item);
         nbtItem.setString("data", this.spawnerData.getIdentifyingName());
